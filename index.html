@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid-19 Tracker</title>
+    <style>
+        h1,form{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 id="get">Get Country Name</h1>
+        <form action="" id="form">
+            <input type="text" id="country" placeholder="country name" required>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <div>
+        <h1 id="active"></h1>
+        <h1 id="deaths"></h1>
+        <h1 id="confirmed"></h1>
+    </div>
+</body>
+<script>
+    let forms=document.getElementById('form');
+    forms.addEventListener('submit',(e)=>{
+        e.preventDefault()
+             let countries=document.getElementById('country').value
+            // alert(countries.value);
+
+             let url="https://api.covid19api.com/total/dayone/country/"+countries
+
+             fetch(url)
+             .then(res=>{
+                 return res.json()
+             })
+             .then(data=>{
+                 console.log(data)
+                 let ind=data.length-1;
+                 let active=document.getElementById('active')
+                 let deaths=document.getElementById('deaths')
+                  let confirmed=document.getElementById('confirmed')
+
+                  confirmed.innerHTML=''
+                  deaths.innerHTML=''
+                  active.innerHTML=''
+
+                  active.append("Total Active Cases:" + data[ind].Active)
+                  deaths.append("Total Deaths:" + data[ind].Deaths)
+                   confirmed.append("Total Confirmed Cases:" + data[ind].Confirmed)
+
+             })
+     })
+   
+</script>
+</html>
